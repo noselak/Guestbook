@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+   http://www.springframework.org/schema/context 
+   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+   <context:component-scan base-package="pl.pawc.guestbook" />
+
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <property name="prefix" value="/WEB-INF/jsp/" />
+      <property name="suffix" value=".jsp" />
+   </bean>
+
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="pl.pawc.guestbook.POJO.Exception">
+					ExceptionPage
+				</prop>
+			</props>
+		</property>
+		<property name="defaultErrorView" value="ErrorPage"/>
+	</bean>
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+ 		<property name="url" value="jdbc:mysql://kritsit.ddns.net:3306/pawc_db?useUnicode=true&amp;useJDBCCompliantTimezoneS‌​hift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+		<property name="username" value="pawc"/>
+		<property name="password" value="pawc_mysql_password"/>
+	</bean>
+
+	<bean id="entryJDBCTemplate" class="pl.pawc.guestbook.DAO.EntryJDBCTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="entryController" class="pl.pawc.guestbook.controller.Controller">
+		<property name="entryJDBCTemplate" ref="entryJDBCTemplate"/>
+	</bean>
+
+</beans>    

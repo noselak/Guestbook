@@ -4,8 +4,8 @@
     <title>Guestbook</title>
 </head>
 <body>
-<form:form method="GET" action="/Guestbook/redirect">
-<input type="submit" value="Redirect"/>
+<form:form method="GET" action="/Guestbook/addEntry">
+<input type="submit" value="add test entry"/>
 </form:form>
 </body>
 </html>

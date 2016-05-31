@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.ModelMap;
 import pl.pawc.guestbook.DAO.EntryJDBCTemplate;
 import pl.pawc.guestbook.POJO.Entry;
+import pl.pawc.guestbook.POJO.EntryException;
 
 @Controller
 public class EntryController {
@@ -28,5 +29,17 @@ public class EntryController {
 	 public String redirect(ModelMap model){
 			return "SuccessPage";
 	 }
+   
+      @RequestMapping(value="/addEntry", method=RequestMethod.GET)
+      @ExceptionHandler({EntryException.class})
+      public String addEntry(){
+        Entry entry = new Entry();
+        entry.setName("test name");
+        entry.setMessage("test message");
+
+          entryJDBCTemplate.addEntry(entry);
+
+        return "SuccessPage";
+      }
 
 }

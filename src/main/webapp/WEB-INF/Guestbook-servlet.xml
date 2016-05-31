@@ -14,17 +14,6 @@
       <property name="suffix" value=".jsp" />
    </bean>
 
-	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="pl.pawc.guestbook.POJO.Exception">
-					ExceptionPage
-				</prop>
-			</props>
-		</property>
-		<property name="defaultErrorView" value="ErrorPage"/>
-	</bean>
-
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
  		<property name="url" value="jdbc:mysql://kritsit.ddns.net:3306/pawc_db?useUnicode=true&amp;useJDBCCompliantTimezoneS‌​hift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>

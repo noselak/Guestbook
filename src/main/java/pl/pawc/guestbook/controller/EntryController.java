@@ -1,5 +1,7 @@
 package pl.pawc.guestbook.controller;
 
+import java.io.IOException;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,11 +21,14 @@ public class EntryController {
 	 public void setEntryJDBCTemplate(EntryJDBCTemplate entryJDBCTemplate){
 	 	this.entryJDBCTemplate=entryJDBCTemplate;
    }
-
-   @RequestMapping(value = "/Home", method = RequestMethod.GET)
-   public ModelAndView entry() {
-      return new ModelAndView("Home", "command", new Entry());
-   }
+   
+	@RequestMapping(value="/Home", method=RequestMethod.GET)
+        public ModelAndView listContact(ModelAndView model) throws IOException{
+        List<Entry> entries = entryJDBCTemplate.getAllEntries();
+        model.addObject("Entries", entries);
+        model.setViewName("Home");
+        return model;
+    }
 
 	 @RequestMapping(value="/redirect", method=RequestMethod.GET)
 	 public String redirect(ModelMap model){

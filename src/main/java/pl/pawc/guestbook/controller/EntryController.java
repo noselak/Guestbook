@@ -29,6 +29,17 @@ public class EntryController {
         model.setViewName("Home");
         return model;
     }
+        
+     @RequestMapping(value="/showBean", method=RequestMethod.GET)
+     public String showBean(ModelMap model){
+       Entry entry = new Entry();
+       entry.setId(1);
+       entry.setName("test name");
+       entry.setMessage("test message");
+       model.addAttribute("entry", entry);
+       model.addAttribute("simpleNumber", 34);
+       return "ResultPage";
+     }
 
 	 @RequestMapping(value="/redirect", method=RequestMethod.GET)
 	 public String redirect(ModelMap model){

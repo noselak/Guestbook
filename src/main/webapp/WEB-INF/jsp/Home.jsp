@@ -9,6 +9,10 @@
 <input type="submit" value="add test entry"/>
 </form:form>
 
+<form:form method="GET" action="/Guestbook/showBean">
+<input type="submit" value="bean"/>
+</form:form>
+
 <c:forEach var="entry" items="${Entries}" varStatus="status">
                 <tr>
                     <td>${entry.id}</td>

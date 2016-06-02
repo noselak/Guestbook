@@ -30,9 +30,9 @@ public class EntryJDBCTemplate implements EntryDAO{
 	}
 
 	@Override
-	public void addEntry(Entry entry){
+	public void addEntry(String name, String message){
 		String SQL = "insert into Guestbook (name, message) values (?, ?)";
-		jdbcTemplateObject.update(SQL, new Object[]{entry.getName(), entry.getMessage()} );
+		jdbcTemplateObject.update(SQL, new Object[]{name, message} );
 	}
 
 }

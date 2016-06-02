@@ -2,6 +2,7 @@ package pl.pawc.guestbook.controller;
 
 import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +22,18 @@ public class EntryController {
    }
    
 	@RequestMapping(value="/Home", method=RequestMethod.GET)
-        public ModelAndView listContact(ModelAndView model) throws IOException{
+        public ModelAndView listEntries(ModelAndView model) throws IOException{
         List<Entry> entries = entryJDBCTemplate.getAllEntries();
         model.addObject("command", new Entry());
         model.addObject("Entries", entries);
         model.setViewName("Home");
+        return model;
+    }
+        
+     @RequestMapping(value="/index", method=RequestMethod.GET)
+        public ModelAndView list(ModelAndView model) throws IOException{
+        model.addObject("command", new Entry());
+        model.setViewName("index");
         return model;
     }
    
@@ -36,5 +44,17 @@ public class EntryController {
           entryJDBCTemplate.addEntry(entry.getName(), entry.getMessage());
           return "redirect:Home";
         }
+        
+    
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String root() {
+        return "index";
+    }
 
+
+      @RequestMapping(value="/addName", method=RequestMethod.POST)
+      public String addName(@ModelAttribute("Guestbook") Entry entry, ModelMap model, HttpServletRequest request){
+         request.getSession().setAttribute("nameSession", entry.getName());
+         return "Home";
+      }
 }

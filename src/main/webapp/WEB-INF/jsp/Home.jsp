@@ -16,7 +16,7 @@
     </tr>
     <tr>
         <td><form:label path="message">Message</form:label></td>
-        <td><form:input path="message" /></td>
+        <td><form:input path="message" size="60" /></td>
     </tr>
     <tr>
         <td colspan="2">
@@ -29,8 +29,7 @@
 <table>
 <c:forEach var="entry" items="${Entries}" varStatus="status">
                 <tr>
-                    <td>${entry.id}</td>
-                    <td>${entry.name}</td>
+                    <td><font color="green">${entry.name}:</font></td>
                     <td>${entry.message}</td>                          
                 </tr>
 </c:forEach>

@@ -10,19 +10,22 @@
 
   <form:form method="POST" action="/Guestbook/addEntry">
    <table>
+     <!--
     <tr>
         <td><form:label path="name">Name</form:label></td>
         <td><form:input path="name" /></td>
     </tr>
+     -->
     <tr>
-        <td><form:label path="message">Message</form:label></td>
-        <td><form:input path="message" size="60" /></td>
+        <!--<td><form:label path="message">Message</form:label></td>-->
+        <td><form:input path="message" size="50" /></td>
+        <td><input type="submit" value="Submit"/></td>
     </tr>
-    <tr>
+    <!--<tr>
         <td colspan="2">
             <input type="submit" value="Submit"/>
         </td>
-    </tr>
+    </tr>-->
 </table>  
 </form:form>
 

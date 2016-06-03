@@ -20,15 +20,12 @@ public class EntryController {
 	 public void setEntryJDBCTemplate(EntryJDBCTemplate entryJDBCTemplate){
 	 	this.entryJDBCTemplate=entryJDBCTemplate;
    }
-   
-	@RequestMapping(value="/Home", method=RequestMethod.GET)
-        public ModelAndView listEntries(ModelAndView model) throws IOException{
-        List<Entry> entries = entryJDBCTemplate.getAllEntries();
-        model.addObject("command", new Entry());
-        model.addObject("Entries", entries);
-        model.setViewName("Home");
-        return model;
-    }
+          
+      @RequestMapping(value = "/", method = RequestMethod.GET)
+        public String root(@ModelAttribute("Guestbook") Entry entry, ModelMap model ){
+        model.addAttribute("command", new Entry());
+        return "index";
+      }       
         
      @RequestMapping(value="/index", method=RequestMethod.GET)
         public ModelAndView list(ModelAndView model) throws IOException{
@@ -36,25 +33,28 @@ public class EntryController {
         model.setViewName("index");
         return model;
     }
-   
-      @RequestMapping(value = "/addEntry", method=RequestMethod.POST)
-        public String addEntry(@ModelAttribute("Guestbook") Entry entry, ModelMap model ){
-          model.addAttribute("name", entry.getName());
-          model.addAttribute("message", entry.getMessage());
-          entryJDBCTemplate.addEntry(entry.getName(), entry.getMessage());
-          return "redirect:Home";
-        }
         
-    
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String root() {
-        return "index";
+      @RequestMapping(value="/Home", method=RequestMethod.GET)
+        public ModelAndView listEntries(ModelAndView model) throws IOException{
+        List<Entry> entries = entryJDBCTemplate.getAllEntries();
+        model.addObject("command", new Entry());
+        model.addObject("Entries", entries);
+        model.setViewName("Home");
+        return model;
     }
-
-
+   
       @RequestMapping(value="/addName", method=RequestMethod.POST)
-      public String addName(@ModelAttribute("Guestbook") Entry entry, ModelMap model, HttpServletRequest request){
+         public String addName(@ModelAttribute("Guestbook") Entry entry, ModelMap model, HttpServletRequest request){
+         model.addAttribute("command", new Entry());
          request.getSession().setAttribute("nameSession", entry.getName());
-         return "Home";
+         return "redirect:Home";
       }
+      
+      @RequestMapping(value = "/addEntry", method=RequestMethod.POST)
+        public String addEntry(@ModelAttribute("Guestbook") Entry entry, ModelMap model, HttpServletRequest request){
+        //model.addAttribute("name", entry.getName());
+        model.addAttribute("message", entry.getMessage());
+        entryJDBCTemplate.addEntry((String) request.getSession().getAttribute("nameSession"), entry.getMessage());
+        return "redirect:Home";
+        }
 }

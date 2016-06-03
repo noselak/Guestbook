@@ -9,11 +9,11 @@
     <title>JSP Page</title>
   </head>
   <body>
-    <h1>your name:</h1>
+    your name please
   <form:form method="POST" action="addName">
     <table><td><tr>
-     <form:label path="name">Name</form:label>
-     <form:input path="name" size="60" />
+     <!-- <form:label path="name">Name</form:label> -->
+     <form:input path="name" size="30" />
      <input type="submit" value="Submit"/>
     </table></tr></td>
   </form:form>

@@ -10,15 +10,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.ModelMap;
 import pl.pawc.guestbook.DAO.EntryJDBCTemplate;
+import pl.pawc.guestbook.DAO.UserJDBCTemplate;
 import pl.pawc.guestbook.POJO.Entry;
 
 @Controller
 public class EntryController {
 
   private EntryJDBCTemplate entryJDBCTemplate;
+  private UserJDBCTemplate userJDBCTemplate;
 
   public void setEntryJDBCTemplate(EntryJDBCTemplate entryJDBCTemplate){
     this.entryJDBCTemplate=entryJDBCTemplate;
+  }
+  
+  public void setUserJDBCTemplate(UserJDBCTemplate userJDBCTemplate){
+    this.userJDBCTemplate=userJDBCTemplate;
   }
 
   @RequestMapping(value = "/", method = RequestMethod.GET)

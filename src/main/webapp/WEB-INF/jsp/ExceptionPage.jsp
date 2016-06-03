@@ -4,7 +4,7 @@
 <title>Exception Page</title>
 </head>
 <body>
-	<h2>Exception</h2>
-	<h3>${exception.message}</h3>
+  <h2>Exception</h2>
+  <h3>${exception.message}</h3>
 </body>
 </html>

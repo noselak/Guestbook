@@ -16,17 +16,27 @@ public class UserJDBCTemplate implements UserDAO {
 
   @Override
   public User getUser(String name) {
-    throw new UnsupportedOperationException("Not supported yet."); 
+    String SQL = "Select * from GuestbookUser where name = ?";
+    User user = jdbcTemplateObject.queryForObject(SQL, new Object[]{name}, new UserMapper());
+    return user;
   }
 
   @Override
   public void addUser(String name, String hashedPass) {
-    throw new UnsupportedOperationException("Not supported yet.");
+    String SQL = "insert into GuestbookUser (name, hashedPass) values (?, ?)";
+    jdbcTemplateObject.update(SQL, new Object[]{name, hashedPass} );
   }
 
   @Override
-  public void updateUser(String name, String location, String email, String hashedPass) {
-    throw new UnsupportedOperationException("Not supported yet.");
+  public void updateLocation(String name, String location) {
+    String SQL = "update GuestbookUser set location = ? where name = ?";
+    jdbcTemplateObject.update( SQL, new Object[]{location, name} );
+  }
+  
+  @Override
+  public void updateEmail(String name, String email) {
+    String SQL = "update GuestbookUser set email = ? where name = ?";
+    jdbcTemplateObject.update( SQL, new Object[]{email, name} );
   }
   
 }

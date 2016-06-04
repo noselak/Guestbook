@@ -2,11 +2,16 @@ package pl.pawc.guestbook.POJO;
 
 public class User {
   
+  private int id;
   private String name;
   private String location;
   private String email;
   private String hashedPass;
 
+  public void setId(int id){
+    this.id=id;
+  }
+  
   public void setName(String name) {
     this.name = name;
   }
@@ -21,6 +26,10 @@ public class User {
 
   public void setHashedPass(String hashedPass) {
     this.hashedPass = hashedPass;
+  }
+  
+  public int getId(){
+    return id;
   }
 
   public String getName() {

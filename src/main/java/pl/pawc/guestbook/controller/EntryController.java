@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.pawc.guestbook.DAO.EntryJDBCTemplate;
 import pl.pawc.guestbook.DAO.UserJDBCTemplate;
 import pl.pawc.guestbook.POJO.Entry;
@@ -34,21 +35,7 @@ public class EntryController {
     model.addAttribute("entry", new Entry());
     model.addAttribute("user", new User());
     return "index";
-  }
-    
-  @RequestMapping(value = "/UserExists", method = RequestMethod.GET)
-    public String userExists(@ModelAttribute("Guestbook") User user, ModelMap model ){
-    model.addAttribute("entry", new Entry());
-    model.addAttribute("user", new User());
-    return "UserExists";
-  }   
-    
-  @RequestMapping(value = "/UserDoesNotExist", method = RequestMethod.GET)
-    public String userDoesNotExist(@ModelAttribute("Guestbook") User user, ModelMap model ){
-    model.addAttribute("entry", new Entry());
-    model.addAttribute("user", new User());
-    return "UserDoesNotExist";
-  }   
+  } 
 
   @RequestMapping(value="/index", method=RequestMethod.GET)
     public ModelAndView list(ModelAndView model) throws IOException{
@@ -64,7 +51,13 @@ public class EntryController {
     if(request.getSession().getAttribute("nameSession")==null){
       return null;
     }
-    List<Entry> entries = entryJDBCTemplate.getAllEntries();
+    List<Entry> entries;
+    try{
+      entries = entryJDBCTemplate.getAllEntries();
+    }
+    catch(Exception e){
+      throw new GuestbookException(e.toString());
+    }
     model.addObject("command", new Entry());
     model.addObject("Entries", entries);
     model.setViewName("Home");
@@ -82,11 +75,17 @@ public class EntryController {
     public String addEntry(@ModelAttribute("Guestbook") Entry entry, ModelMap model, HttpServletRequest request){
     //model.addAttribute("name", entry.getName());
     model.addAttribute("message", entry.getMessage());
-    entryJDBCTemplate.addEntry((String) request.getSession().getAttribute("nameSession"), entry.getMessage());
+    try{
+      entryJDBCTemplate.addEntry((String) request.getSession().getAttribute("nameSession"), entry.getMessage());
+    }
+    catch(Exception e){
+      throw new GuestbookException(e.toString());
+    }
     return "redirect:Home";
   }
     
   @RequestMapping(value = "/addUser", method=RequestMethod.POST)
+  @ExceptionHandler({GuestbookException.class})
     public String addUser(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){
     model.addAttribute("entry", new Entry());
     model.addAttribute("user", new User());
@@ -97,10 +96,15 @@ public class EntryController {
     String hashedPass = String.valueOf(pass.hashCode());
 
       if(!userJDBCTemplate.checkIfUserExists(name)){
-        userJDBCTemplate.addUser(name, hashedPass);
+        try{
+          userJDBCTemplate.addUser(name, hashedPass);
+        }
+        catch(Exception e){
+          throw new GuestbookException(e.toString());
+        }
       }
       else{
-        return "redirect:UserExists";
+        throw new GuestbookException("Username already exists");
       }
     return "redirect:index";
     }
@@ -114,13 +118,13 @@ public class EntryController {
         String name = user.getName();
         String pass = user.getHashedPass();
         
-        if(!userJDBCTemplate.checkIfUserExists(name)) return "redirect:UserDoesNotExist";
+        if(!userJDBCTemplate.checkIfUserExists(name)) throw new GuestbookException(("User does not exist"));
         if(userJDBCTemplate.logIn(name, String.valueOf(pass.hashCode()))){
           request.getSession().setAttribute("nameSession", name);
           return "redirect:Home";
         }
         else{
-          return "IncorrectPassword";
+          throw new GuestbookException("Incorrect password");
         }
     }
     

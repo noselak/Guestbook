@@ -33,14 +33,14 @@
     <property name="entryJDBCTemplate" ref="entryJDBCTemplate"/>
     <property name="userJDBCTemplate" ref="userJDBCTemplate"/>
   </bean>
-  <!--
+
   <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
     <property name="exceptionMappings">
     <props>
-      <prop key="com.tutorialspoint.SpringException">ExceptionPage</prop>
+      <prop key="pl.pawc.guestbook.POJO.GuestbookException">ExceptionPage</prop>
     </props>
     </property>
     <property name="defaultErrorView" value="ErrorPage"/>
   </bean>
-  -->
+
 </beans>

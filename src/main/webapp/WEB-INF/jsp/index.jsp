@@ -11,7 +11,7 @@
   <body>
 
     Log in
-    <form:form method="POST" action="logIn" modelAttribute="user">
+    <form:form method="POST" action="login" modelAttribute="user">
       <table><td>
         <form:label path="name">Name</form:label>
         <form:input path="name" size="15" />

@@ -7,7 +7,13 @@
   <title>Guestbook</title>
 </head>
 <body>
-
+  
+  <form:form method="POST" action="logout" modelAttribute="user">
+  <table>
+    <td>You are logged as ${nameSession} <input type="submit" value="Logout"/> </td>
+  </table>
+  </form:form>
+  
   <form:form method="POST" action="/Guestbook/addEntry">
   <table>
     <!--

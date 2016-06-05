@@ -60,15 +60,16 @@ public class EntryController {
     }
     model.addObject("command", new Entry());
     model.addObject("Entries", entries);
+    model.addObject("nameSession", request.getSession().getAttribute("nameSession"));
     model.setViewName("Home");
     return model;
   }
 
-  @RequestMapping(value="/addName", method=RequestMethod.POST)
-     public String addName(@ModelAttribute("Guestbook") Entry entry, ModelMap model, HttpServletRequest request){
+  @RequestMapping(value="/logout", method=RequestMethod.POST)
+     public String logout(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){
      model.addAttribute("command", new Entry());
-     request.getSession().setAttribute("nameSession", entry.getName());
-     return "redirect:Home";
+     request.getSession().removeAttribute("nameSession");
+     return "redirect:index";
   }
 
   @RequestMapping(value = "/addEntry", method=RequestMethod.POST)
@@ -109,8 +110,8 @@ public class EntryController {
     return "redirect:index";
     }
     
-    @RequestMapping(value="/logIn", method=RequestMethod.POST)
-      public String logIn(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){
+    @RequestMapping(value="/login", method=RequestMethod.POST)
+      public String login(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){
         model.addAttribute("command", new Entry());
         model.addAttribute("entry", new Entry());
         model.addAttribute("user", new User());

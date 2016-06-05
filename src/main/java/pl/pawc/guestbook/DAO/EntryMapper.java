@@ -13,6 +13,8 @@ public class EntryMapper implements RowMapper<Entry>{
     entry.setId(rs.getInt("id"));
     entry.setName(rs.getString("name"));
     entry.setMessage(rs.getString("message"));
+    entry.setEmail(rs.getString("email"));
+    entry.setLocation(rs.getString("location"));
     return entry;
 
   }

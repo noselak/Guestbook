@@ -5,6 +5,24 @@ public class Entry{
   private int id;
   private String name;
   private String message;
+  private String location;
+
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+  private String email;
 
   public int getId(){
     return id;

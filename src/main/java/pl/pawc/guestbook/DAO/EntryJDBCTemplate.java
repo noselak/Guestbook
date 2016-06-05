@@ -24,7 +24,10 @@ public class EntryJDBCTemplate implements EntryDAO{
 
   @Override
   public List<Entry> getAllEntries(){
-    String SQL = "select * from Guestbook order by id DESC";
+    String SQL = "select Guestbook.id, Guestbook.name, Guestbook.message, "
+      + "GuestbookUser.location, GuestbookUser.email from Guestbook inner join GuestbookUser on "
+      + "Guestbook.name=GuestbookUser.name "
+      + "order by id DESC";
     List<Entry> entries = jdbcTemplateObject.query(SQL, new EntryMapper());
     return entries;
   }

@@ -36,6 +36,24 @@ public class EntryController {
     model.addAttribute("user", new User());
     return "index";
   } 
+    
+  @RequestMapping(value = "/ViewProfile", method = RequestMethod.GET)
+    public String viewProfile(@ModelAttribute("Guestbook") Entry entry, ModelMap model, HttpServletRequest request){
+    if(request.getSession().getAttribute("nameSession")==null){
+      throw new GuestbookException("You are not logged in");
+    }
+    User user;
+    try{
+      user = userJDBCTemplate.getUser((String) request.getSession().getAttribute("nameSession"));
+    }
+    catch(Exception e){
+      throw new GuestbookException(e.toString());
+    }
+    model.addAttribute("command", new User());
+    model.addAttribute("entry", new Entry());
+    model.addAttribute("user", user);
+    return "ViewProfile";
+  } 
 
   @RequestMapping(value="/index", method=RequestMethod.GET)
     public ModelAndView list(ModelAndView model) throws IOException{
@@ -49,7 +67,7 @@ public class EntryController {
   @RequestMapping(value="/Home", method=RequestMethod.GET)
     public ModelAndView listEntries(ModelAndView model, HttpServletRequest request) throws IOException{
     if(request.getSession().getAttribute("nameSession")==null){
-      return null;
+      throw new GuestbookException("You are not logged in");
     }
     List<Entry> entries;
     try{
@@ -83,6 +101,20 @@ public class EntryController {
       throw new GuestbookException(e.toString());
     }
     return "redirect:Home";
+  }
+    
+  @RequestMapping(value = "/updateDetails", method=RequestMethod.POST)
+    public String updateDetails(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){
+    //model.addAttribute("name", entry.getName());
+    model.addAttribute("user", new User());
+    try{
+      userJDBCTemplate.updateLocation((String) request.getSession().getAttribute("nameSession"), user.getLocation());
+      userJDBCTemplate.updateEmail((String) request.getSession().getAttribute("nameSession"), user.getEmail());
+    }
+    catch(Exception e){
+      throw new GuestbookException(e.toString());
+    }
+    return "redirect:ViewProfile";
   }
     
   @RequestMapping(value = "/addUser", method=RequestMethod.POST)

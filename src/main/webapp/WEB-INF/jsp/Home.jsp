@@ -5,15 +5,16 @@
 <html>
 <head>
   <title>Guestbook</title>
+  <style type="text/css"><!-- A{text-decoration:none} --></style>
 </head>
-<body>
+<body link="#004d00" alink="#00b300" vlink="#004d00">
   
   <p align="right"><table>
     logged as <font color="green">${nameSession} </font> 
     <form:form method="POST" action="logout" modelAttribute="user">
     <input type="submit" value="Logout"/> 
     </form:form>
-    <form:form method="POST" action="viewProfile" modelAttribute="user">
+    <form:form method="GET" action="ViewProfile" modelAttribute="user">
     <input type="submit" value="Profile"/> 
     </form:form>
   </table></p>

@@ -139,6 +139,7 @@ public class EntryController {
       else{
         throw new GuestbookException("Username already exists");
       }
+    request.getSession().setAttribute("registration", "Registration complete. You may now log in.");
     return "redirect:index";
     }
     

@@ -9,19 +9,18 @@
     <title>Guestbook</title>
   </head>
   <body>
-
-    Log in
+Log in
     <form:form method="POST" action="login" modelAttribute="user">
       <table><td>
-        <form:label path="name">Name</form:label>
+        <form:label path="name"> name </form:label>
         <form:input path="name" size="15" />
-        <form:label path="hashedPass">Password</form:label>
+        <form:label path="hashedPass"> and password </form:label>
         <form:input type="password" path="hashedPass" size="15" />
         <input type="submit" value="Sign in"/>
       </td></table>
     </form:form>
-
-    Register
+<hr>
+Register
     <form:form method="POST" action="addUser" modelAttribute="user">
       <table><td>
         <form:label path="name">Name</form:label>
@@ -31,6 +30,7 @@
         <input type="submit" value="Register"/>
         </td></table>
     </form:form>
-    
+<hr>
+    <font color="green" size="3">${registration}</font>
   </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import pl.pawc.guestbook.DAO.EntryJDBCTemplate;
 import pl.pawc.guestbook.DAO.UserJDBCTemplate;
 import pl.pawc.guestbook.POJO.Entry;
+import pl.pawc.guestbook.POJO.User;
 
 @Controller
 public class EntryController {
@@ -29,12 +30,15 @@ public class EntryController {
 
   @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root(@ModelAttribute("Guestbook") Entry entry, ModelMap model ){
-    model.addAttribute("command", new Entry());
+    model.addAttribute("entry", new Entry());
+    model.addAttribute("user", new User());
     return "index";
   }       
 
   @RequestMapping(value="/index", method=RequestMethod.GET)
     public ModelAndView list(ModelAndView model) throws IOException{
+    model.addObject("entry", new Entry());
+    model.addObject("user", new User());
     model.addObject("command", new Entry());
     model.setViewName("index");
     return model;
@@ -63,4 +67,18 @@ public class EntryController {
     entryJDBCTemplate.addEntry((String) request.getSession().getAttribute("nameSession"), entry.getMessage());
     return "redirect:Home";
   }
+    
+  @RequestMapping(value = "/addUser", method=RequestMethod.POST)
+    public String addUser(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){
+    model.addAttribute("entry", new Entry());
+    model.addAttribute("user", new User());
+    //model.addAttribute("name", user.getName());
+    //model.addAttribute("hashedPass", user.getHashedPass());
+    String name = user.getName();
+    String pass = user.getHashedPass();
+    String hashedPass = String.valueOf(pass.hashCode());
+    userJDBCTemplate.addUser(name, hashedPass);
+    return "redirect:index";
+  }
+    
 }

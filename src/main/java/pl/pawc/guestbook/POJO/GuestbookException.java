@@ -1,10 +1,10 @@
 package pl.pawc.guestbook.POJO;
 
-public class EntryException extends RuntimeException{
+public class GuestbookException extends RuntimeException{
 
   private String message;
 
-  public EntryException(String message){
+  public GuestbookException(String message){
     this.message=message;
   }	
 

@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import pl.pawc.guestbook.DAO.EntryJDBCTemplate;
 import pl.pawc.guestbook.DAO.UserJDBCTemplate;
 import pl.pawc.guestbook.POJO.Entry;
+import pl.pawc.guestbook.POJO.GuestbookException;
 import pl.pawc.guestbook.POJO.User;
 
 @Controller
@@ -33,7 +34,14 @@ public class EntryController {
     model.addAttribute("entry", new Entry());
     model.addAttribute("user", new User());
     return "index";
-  }       
+  }
+    
+  @RequestMapping(value = "/UserExists", method = RequestMethod.GET)
+    public String root(@ModelAttribute("Guestbook") User user, ModelMap model ){
+    model.addAttribute("entry", new Entry());
+    model.addAttribute("user", new User());
+    return "UserExists";
+  }   
 
   @RequestMapping(value="/index", method=RequestMethod.GET)
     public ModelAndView list(ModelAndView model) throws IOException{
@@ -77,8 +85,15 @@ public class EntryController {
     String name = user.getName();
     String pass = user.getHashedPass();
     String hashedPass = String.valueOf(pass.hashCode());
-    userJDBCTemplate.addUser(name, hashedPass);
+
+      if(!userJDBCTemplate.checkIfUserExists(name)){
+        userJDBCTemplate.addUser(name, hashedPass);
+      }
+      else{
+        return "redirect:UserExists";
+      }
+
     return "redirect:index";
-  }
+    }
     
 }

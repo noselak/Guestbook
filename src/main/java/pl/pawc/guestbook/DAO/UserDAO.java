@@ -8,5 +8,6 @@ public interface UserDAO{
   public void addUser(String name, String hashedPass);
   public void updateLocation(String name, String location);
   public void updateEmail(String name, String email);
+  public boolean checkIfUserExists(String name);
 
 }

@@ -1,6 +1,7 @@
 package pl.pawc.guestbook.DAO;
 
 import javax.sql.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import pl.pawc.guestbook.POJO.User;
 
@@ -17,8 +18,13 @@ public class UserJDBCTemplate implements UserDAO {
   @Override
   public User getUser(String name) {
     String SQL = "Select * from GuestbookUser where name = ?";
+    try{
     User user = jdbcTemplateObject.queryForObject(SQL, new Object[]{name}, new UserMapper());
     return user;
+    }
+    catch(EmptyResultDataAccessException e){
+      return null;
+    }
   }
 
   @Override
@@ -37,6 +43,15 @@ public class UserJDBCTemplate implements UserDAO {
   public void updateEmail(String name, String email) {
     String SQL = "update GuestbookUser set email = ? where name = ?";
     jdbcTemplateObject.update( SQL, new Object[]{email, name} );
+  }
+
+  @Override
+  public boolean checkIfUserExists(String name) {
+    User user;
+    user = getUser(name);
+    if(user==null) return false;
+    if(name.equals(user.getName())) return true;
+    else return false;
   }
   
 }

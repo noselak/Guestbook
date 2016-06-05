@@ -8,41 +8,32 @@
 </head>
 <body>
   
-  <form:form method="POST" action="logout" modelAttribute="user">
+  <p align="right"><table>
+    logged as <font color="green">${nameSession} </font> 
+    <form:form method="POST" action="logout" modelAttribute="user">
+    <input type="submit" value="Logout"/> 
+    </form:form>
+    <form:form method="POST" action="viewProfile" modelAttribute="user">
+    <input type="submit" value="Profile"/> 
+    </form:form>
+  </table></p>
+  
+  <table width="100%"><tr><p align="center">
+    <form:form method="POST" action="/Guestbook/addEntry">
+      <form:label path="message"></form:label>
+      <form:input path="message" size="80" />
+      <!--<input type="submit" value="Submit"/>-->
+    </form:form>
+  </p></tr></table>
+   
   <table>
-    <td>You are logged as ${nameSession} <input type="submit" value="Logout"/> </td>
+    <c:forEach var="entry" items="${Entries}" varStatus="status">
+      <tr>
+        <td><font color="green">${entry.name}:</font></td>
+        <td>${entry.message}</td>                          
+      </tr>
+    </c:forEach>
   </table>
-  </form:form>
-  
-  <form:form method="POST" action="/Guestbook/addEntry">
-  <table>
-    <!--
-   <tr>
-       <td><form:label path="name">Name</form:label></td>
-       <td><form:input path="name" /></td>
-   </tr>
-    -->
-   <tr>
-       <!--<td><form:label path="message">Message</form:label></td>-->
-       <td><form:input path="message" size="50" /></td>
-       <td><input type="submit" value="Submit"/></td>
-   </tr>
-   <!--<tr>
-       <td colspan="2">
-           <input type="submit" value="Submit"/>
-       </td>
-   </tr>-->
-  </table>  
-</form:form>
-  
-<table>
-  <c:forEach var="entry" items="${Entries}" varStatus="status">
-    <tr>
-      <td><font color="green">${entry.name}:</font></td>
-      <td>${entry.message}</td>                          
-    </tr>
-  </c:forEach>
-</table>
   
 </body>
 </html>

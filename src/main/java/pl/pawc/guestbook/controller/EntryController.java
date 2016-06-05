@@ -37,10 +37,17 @@ public class EntryController {
   }
     
   @RequestMapping(value = "/UserExists", method = RequestMethod.GET)
-    public String root(@ModelAttribute("Guestbook") User user, ModelMap model ){
+    public String userExists(@ModelAttribute("Guestbook") User user, ModelMap model ){
     model.addAttribute("entry", new Entry());
     model.addAttribute("user", new User());
     return "UserExists";
+  }   
+    
+  @RequestMapping(value = "/UserDoesNotExist", method = RequestMethod.GET)
+    public String userDoesNotExist(@ModelAttribute("Guestbook") User user, ModelMap model ){
+    model.addAttribute("entry", new Entry());
+    model.addAttribute("user", new User());
+    return "UserDoesNotExist";
   }   
 
   @RequestMapping(value="/index", method=RequestMethod.GET)
@@ -53,7 +60,10 @@ public class EntryController {
   }
 
   @RequestMapping(value="/Home", method=RequestMethod.GET)
-    public ModelAndView listEntries(ModelAndView model) throws IOException{
+    public ModelAndView listEntries(ModelAndView model, HttpServletRequest request) throws IOException{
+    if(request.getSession().getAttribute("nameSession")==null){
+      return null;
+    }
     List<Entry> entries = entryJDBCTemplate.getAllEntries();
     model.addObject("command", new Entry());
     model.addObject("Entries", entries);
@@ -92,8 +102,26 @@ public class EntryController {
       else{
         return "redirect:UserExists";
       }
-
     return "redirect:index";
+    }
+    
+    @RequestMapping(value="/logIn", method=RequestMethod.POST)
+      public String logIn(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){
+        model.addAttribute("command", new Entry());
+        model.addAttribute("entry", new Entry());
+        model.addAttribute("user", new User());
+        
+        String name = user.getName();
+        String pass = user.getHashedPass();
+        
+        if(!userJDBCTemplate.checkIfUserExists(name)) return "redirect:UserDoesNotExist";
+        if(userJDBCTemplate.logIn(name, String.valueOf(pass.hashCode()))){
+          request.getSession().setAttribute("nameSession", name);
+          return "redirect:Home";
+        }
+        else{
+          return "IncorrectPassword";
+        }
     }
     
 }

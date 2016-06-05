@@ -9,14 +9,18 @@
     <title>JSP Page</title>
   </head>
   <body>
-    your name please
-    <form:form method="POST" action="addName" modelAttribute="entry">
-      <table><td><tr>
-       <!-- <form:label path="name">Name</form:label> -->
-       <form:input path="name" size="30" />
-       <input type="submit" value="Submit"/>
-      </table></tr></td>
+
+    Log in
+    <form:form method="POST" action="logIn" modelAttribute="user">
+      <table><td>
+        <form:label path="name">Name</form:label>
+        <form:input path="name" size="15" />
+        <form:label path="hashedPass">Password</form:label>
+        <form:input type="password" path="hashedPass" size="15" />
+        <input type="submit" value="Sign in"/>
+      </td></table>
     </form:form>
+
     Register
     <form:form method="POST" action="addUser" modelAttribute="user">
       <table><td>
@@ -24,8 +28,9 @@
         <form:input path="name" size="15" />
         <form:label path="hashedPass">Password</form:label>
         <form:input type="password" path="hashedPass" size="15" />
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="Register"/>
         </td></table>
     </form:form>
+    
   </body>
 </html>

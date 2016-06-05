@@ -53,5 +53,12 @@ public class UserJDBCTemplate implements UserDAO {
     if(name.equals(user.getName())) return true;
     else return false;
   }
+
+  @Override
+  public boolean logIn(String name, String hashedPass) {
+    User user = getUser(name);
+    if(hashedPass.equals(user.getHashedPass())) return true;
+    return false;
+  }
   
 }

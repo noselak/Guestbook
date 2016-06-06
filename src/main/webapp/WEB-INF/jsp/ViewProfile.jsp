@@ -17,8 +17,16 @@
         <form:input path="email" size="25" value="${user.email}" />
         <input type="submit" value="Update"/>
       </td></table>
-        <a href="/Guestbook/Home">back</a>
     </form:form>
+    <form:form method="POST" action="updatePassword" modelAttribute="user">
+      <table><td>
+        <form:label path="hashedPass">new password</form:label>
+        <form:input path="hashedPass" size="15" value="" type="password" />
+        <input type="submit" value="Update password"/>
+      </td></table>
+    </form:form>
+    
+    <a href="/Guestbook/Home">back</a>
     
   </body>
 </html>

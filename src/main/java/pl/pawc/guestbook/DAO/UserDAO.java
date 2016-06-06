@@ -10,5 +10,6 @@ public interface UserDAO{
   public void updateEmail(String name, String email);
   public boolean checkIfUserExists(String name);
   public boolean logIn(String name, String hashedPass);
+  public void updatePassword(String name, String hashedPass);
 
 }

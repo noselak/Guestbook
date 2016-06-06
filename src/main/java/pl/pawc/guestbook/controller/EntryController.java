@@ -117,6 +117,19 @@ public class EntryController {
     return "redirect:ViewProfile";
   }
     
+  @RequestMapping(value = "/updatePassword", method=RequestMethod.POST)
+    public String updatePassword(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){
+    //model.addAttribute("name", entry.getName());
+    model.addAttribute("user", new User());
+    try{
+      userJDBCTemplate.updatePassword((String) request.getSession().getAttribute("nameSession"), user.getHashedPass());
+    }
+    catch(Exception e){
+      throw new GuestbookException(e.toString());
+    }
+    return "redirect:ViewProfile";
+  }
+    
   @RequestMapping(value = "/addUser", method=RequestMethod.POST)
   @ExceptionHandler({GuestbookException.class})
     public String addUser(@ModelAttribute("Guestbook") User user, ModelMap model, HttpServletRequest request){

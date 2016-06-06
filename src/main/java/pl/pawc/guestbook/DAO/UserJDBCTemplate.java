@@ -60,5 +60,12 @@ public class UserJDBCTemplate implements UserDAO {
     if(hashedPass.equals(user.getHashedPass())) return true;
     return false;
   }
+
+  @Override
+  public void updatePassword(String name, String hashedPass){
+    String hashed = String.valueOf(hashedPass.hashCode());
+    String SQL = "update GuestbookUser set hashedPass = ? where name = ?";
+    jdbcTemplateObject.update( SQL, new Object[]{hashed, name} );
+  }
   
 }

@@ -70,14 +70,17 @@ public class EntryController {
       throw new GuestbookException("You are not logged in");
     }
     List<Entry> entries;
+		List<User> users;
     try{
       entries = entryJDBCTemplate.getAllEntries();
+			users = userJDBCTemplate.getAllUsers();
     }
     catch(Exception e){
       throw new GuestbookException(e.toString());
     }
     model.addObject("command", new Entry());
     model.addObject("Entries", entries);
+		model.addObject("Users", users);
     model.addObject("nameSession", request.getSession().getAttribute("nameSession"));
     model.setViewName("Home");
     return model;

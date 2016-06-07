@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import pl.pawc.guestbook.POJO.User;
+import java.util.List;
 
 public class UserJDBCTemplate implements UserDAO {
   
@@ -14,6 +15,13 @@ public class UserJDBCTemplate implements UserDAO {
     this.dataSource = dataSource;
     this.jdbcTemplateObject = new JdbcTemplate(dataSource);
   }
+
+	@Override
+	public List<User> getAllUsers(){
+		String SQL = "select * from GuestbookUser";
+ 		List<User> users = jdbcTemplateObject.query(SQL, new UserMapper());
+		return users;
+	}
 
   @Override
   public User getUser(String name) {

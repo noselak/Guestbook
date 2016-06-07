@@ -26,7 +26,10 @@
       <!--<input type="submit" value="Submit"/>-->
     </form:form>
   </p></tr></table>
-   
+
+<table width="100%">
+<tr>
+<td width="95%">   
   <table>
     <c:forEach var="entry" items="${Entries}" varStatus="status">
       <tr>
@@ -41,6 +44,16 @@
       </tr>
     </c:forEach>
   </table>
-  
+</td>
+<td style="width: 5%; vertical-align: top;">
+<p align="center">registered users</p>
+	<c:forEach var="user" items="${Users}">
+		${user.name}<br>
+	</c:forEach>
+</td>
+</tr>
+</table>
+	  
+
 </body>
 </html>

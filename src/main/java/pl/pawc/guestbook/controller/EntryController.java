@@ -97,6 +97,7 @@ public class EntryController {
     public String addEntry(@ModelAttribute("Guestbook") Entry entry, ModelMap model, HttpServletRequest request){
     //model.addAttribute("name", entry.getName());
     model.addAttribute("message", entry.getMessage());
+		if(entry.getMessage().length()<2) throw new GuestbookException("Minimum 2 characters for a message");
     try{
       entryJDBCTemplate.addEntry((String) request.getSession().getAttribute("nameSession"), entry.getMessage());
     }
@@ -142,6 +143,7 @@ public class EntryController {
     //model.addAttribute("hashedPass", user.getHashedPass());
     String name = user.getName();
     String pass = user.getHashedPass();
+			if(name.length()<3||pass.length()<3) throw new GuestbookException("Minimum 3 characters for username and pass");
     String hashedPass = String.valueOf(pass.hashCode());
 
       if(!userJDBCTemplate.checkIfUserExists(name)){

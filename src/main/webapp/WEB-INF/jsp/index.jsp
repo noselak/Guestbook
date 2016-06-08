@@ -7,6 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Guestbook</title>
+    <link href="css/main.css" rel="stylesheet">
   </head>
   <body>
 Log in

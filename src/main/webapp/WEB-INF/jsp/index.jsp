@@ -7,9 +7,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Guestbook</title>
-    <link href="css/main.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
   </head>
   <body>
+<h1>This should be red</h1>
 Log in
     <form:form method="POST" action="login" modelAttribute="user">
       <table><td>

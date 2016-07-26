@@ -10,7 +10,6 @@
     <link href="css/main.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-<h1>This should be red</h1>
 Log in
     <form:form method="POST" action="login" modelAttribute="user">
       <table><td>

@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" isELIgnored="false" 
     pageEncoding="ISO-8859-1"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Guestbook</title>
-    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <spring:url value="/resources/main.css" var="mainCss" />
+    <link href="${mainCss}" rel="stylesheet" />  
   </head>
   <body>
+    <h2>Guestbook</h2>
 Log in
     <form:form method="POST" action="login" modelAttribute="user">
       <table><td>
